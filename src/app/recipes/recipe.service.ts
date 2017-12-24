@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Subject } from 'rxjs/Subject';
+//import { Store } from '@ngrx/store';
+//import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
 
 @Injectable()
 export class RecipeService {
@@ -19,7 +20,10 @@ export class RecipeService {
         new Ingredient('Meat', 1)])
       ];
 
-      constructor(private slService: ShoppingListService) {}
+      /* Since components can dispath actions themselves we dont need to 
+      use the store here! */
+    //   constructor(//Store takes can of this private slService: ShoppingListService, 
+    //     private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {}
 
       setRecipes(recipes: Recipe[]) {
           this.recipes = recipes;
@@ -34,9 +38,14 @@ export class RecipeService {
           return this.recipes[index];
       }
 
-      addIngredientsToShoppingList(ingredients: Ingredient[]) {
-        this.slService.addIngredients(ingredients);
-      }
+      /*We actually dont need this method here anymore. 
+      The component that wants to perform the action can do it itself!*/
+    //   addIngredientsToShoppingList(ingredients: Ingredient[]) {
+    //       this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
+    //       // Store receive the dispatch and take care of adding the ingredients
+    //       // We don't need to use an external service to take care of it anymore
+    //       //this.slService.addIngredients(ingredients);
+    //   }
 
       addRecipe(recipe: Recipe) {
         this.recipes.push(recipe);

@@ -9,18 +9,20 @@ export class ShoppingListService {
         new Ingredient('Tomatos', 10),
       ];    
 
-    getIngredients() {
-        return this.ingredients.slice();
-    }
+    // Replaced by store
+    // getIngredients() {
+    //     return this.ingredients.slice();
+    // }
 
     getIngredient(index: number) {
         return this.ingredients[index];
     }
 
-    addIngredient(ingredient: Ingredient) {
-        this.ingredients.push(ingredient);
-        this.ingredientsChanged.next(this.ingredients.slice());
-    }
+    // Replaced by store
+    // addIngredient(ingredient: Ingredient) {
+    //     this.ingredients.push(ingredient);
+    //     this.ingredientsChanged.next(this.ingredients.slice());
+    // }
 
     addIngredients(ingredients: Ingredient[]) {
         // for (let ingredient of ingredients) {
