@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit{
         this.dataStorageService.getRecipes();
     }
 
-    isAuthenticated() {
-        return this.authService.isAuthenticated();
-      }    
+    // isAuthenticated() {
+    //     return this.authService.isAuthenticated();
+    //   }    
 }
