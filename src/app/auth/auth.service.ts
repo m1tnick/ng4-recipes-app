@@ -52,8 +52,7 @@ export class AuthService {
 
     logout() {
         firebase.auth().signOut();
-        //this.token = null;
-        this.store.dispatch(new AuthActions.Logout());   
+        //this.token = null; 
     }
 
     // Replaced by the use of store
