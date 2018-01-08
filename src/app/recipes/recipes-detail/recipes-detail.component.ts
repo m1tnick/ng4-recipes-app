@@ -6,6 +6,9 @@ import { Store } from '@ngrx/store';
 
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 import * as fromApp from '../../store/app.reducers';
+import * as fromRecipe from '../store/recipe.reducers';
+import { Observable } from 'rxjs/Observable';
+import * as RecipeActions from '../store/recipe.actions';
 
 @Component({
   selector: 'app-recipes-detail',
@@ -13,25 +16,31 @@ import * as fromApp from '../../store/app.reducers';
   styleUrls: ['./recipes-detail.component.css']
 })
 export class RecipesDetailComponent implements OnInit {
-  recipe: Recipe;
+  recipeState: Observable<fromRecipe.State>;
   id: number;
 
   constructor(private recipeService: RecipeService,
     private router: Router,
     private route: ActivatedRoute,
-    private store: Store<fromApp.AppState>) { }
+    private store: Store<fromRecipe.FeatureState>) { }
 
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.recipe = this.recipeService.getRecipe(this.id);
+        this.recipeState = this.store.select('recipes');
       }
     );
   }
 
   onAddToShoppingList() {
-    this.store.dispatch(new ShoppingListActions.AddIngredients(this.recipe.ingredients));
+    this.store.select('recipes')
+    .take(1)
+    .subscribe((recipeState: fromRecipe.State) => {
+      this.store.dispatch(new ShoppingListActions.AddIngredients(
+        recipeState.recipes[this.id].ingredients)
+      );
+    });
     /* We don't use the method below anymore, since store 
       takes care of it.
       The good thing is that before we invoked the recipeService
@@ -46,7 +55,7 @@ export class RecipesDetailComponent implements OnInit {
   }
 
   onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
+    this.store.dispatch(new RecipeActions.DeleteRecipe(this.id))
     this.router.navigate(['/recipes']);
   }
 
