@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { RecipeService } from '../recipe.service';
 
 import * as RecipeActions from '../store/recipe.actions';
 import * as fromRecipe from '../store/recipe.reducers';
 import { Store } from '@ngrx/store';
+import 'rxjs/add/operator/take';
+
 
 @Component({
   selector: 'app-recipe-edit',
@@ -20,8 +21,7 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, 
     private router: Router, 
-    private store: Store<fromRecipe.FeatureState>,
-    private recipeService: RecipeService) { }
+    private store: Store<fromRecipe.FeatureState>) { }
 
   ngOnInit() {
     this.route.params.subscribe(
