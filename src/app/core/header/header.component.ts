@@ -8,6 +8,7 @@ import * as fromAuth from '../../auth/store/auth.reducers';
 import { Observable } from 'rxjs/Observable';
 //import { HttpEvent, HttpEventType } from '@angular/common/http';
 import * as AuthActions from '../../auth/store/auth.actions';
+import * as RecipeActions from '../../recipes/store/recipe.actions';
 
 @Component({
     selector: 'app-header',
@@ -34,15 +35,10 @@ export class HeaderComponent implements OnInit{
     }
 
     onLogout() {
-        //this.authService.logout();
         this.store.dispatch(new AuthActions.Logout());  
     }
 
     onFetchData() {
-        this.dataStorageService.getRecipes();
-    }
-
-    // isAuthenticated() {
-    //     return this.authService.isAuthenticated();
-    //   }    
+        this.store.dispatch(new RecipeActions.FetchRecipes());
+    }  
 }

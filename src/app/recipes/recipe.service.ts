@@ -19,12 +19,7 @@ export class RecipeService {
         [new Ingredient('Buns', 2),
         new Ingredient('Meat', 1)])
       ];
-
-      /* Since components can dispath actions themselves we dont need to 
-      use the store here! */
-    //   constructor(//Store takes can of this private slService: ShoppingListService, 
-    //     private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {}
-
+      
       setRecipes(recipes: Recipe[]) {
           this.recipes = recipes;
           this.recipesChanged.next(this.recipes.slice());
@@ -32,33 +27,5 @@ export class RecipeService {
 
       getRecipes() {
           return this.recipes.slice();
-      }
-
-      getRecipe(index: number) {
-          return this.recipes[index];
-      }
-
-      /*We actually dont need this method here anymore. 
-      The component that wants to perform the action can do it itself!*/
-    //   addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    //       this.store.dispatch(new ShoppingListActions.AddIngredients(ingredients));
-    //       // Store receive the dispatch and take care of adding the ingredients
-    //       // We don't need to use an external service to take care of it anymore
-    //       //this.slService.addIngredients(ingredients);
-    //   }
-
-      addRecipe(recipe: Recipe) {
-        this.recipes.push(recipe);
-        this.recipesChanged.next(this.recipes.slice());
-      }
-
-      updateRecipe(index: number, newRecipe: Recipe) {
-        this.recipes[index] = newRecipe;
-        this.recipesChanged.next(this.recipes.slice());
-      }
-
-      deleteRecipe(index: number) {
-          this.recipes.splice(index, 1);
-          this.recipesChanged.next(this.recipes.slice());          
       }
 }
